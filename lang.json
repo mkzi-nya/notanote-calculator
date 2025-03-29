@@ -12,7 +12,7 @@
   "siteAuthor": "网站作者：",
   "viewAuthor": "查看",
   "lastUpdate": "上次更新：03.29_15:00 (UTC+8)",
-  "updateCombined": "更新内容：\n创建此网站\n此网站还在建设中",
+  "updateCombined": "更新内容：\n创建此网站\n此网站还在建设中\n\n数据格式：\n曲名,,,等级,,,定数,,,曲名(选填),,,准确率(不带%)",
   "dataProcessing": "数据处理",
   "parse": "解析",
   "uploadFile": "上传文件",
