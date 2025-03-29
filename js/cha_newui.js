@@ -64,28 +64,24 @@ function cleanInputData(data) {
 function processSong(line) {
   const parts = line.split(',,,').map(s => s.trim());
   if (parts.length === 4) {
-    // 格式：曲名, 等级, 定数, 准确率（游玩分数缺失）
+    // 游玩分数缺失，自动补 "-"
+    parts.splice(3, 0, "-");
+  }
+
+  if (parts.length >= 5) {
     const title = parts[0];
     const grade = parts[1];
     const constantVal = parseFloat(parts[2]);
-    const bestScore = null; // 未填写
-    const accuracyVal = parseFloat(parts[3]);
-    return calcSongData(title, grade, constantVal, bestScore, accuracyVal);
-  } else if (parts.length >= 5) {
-    // 格式：曲名, 等级, 定数, 游玩分数, 准确率
-    const title = parts[0];
-    const grade = parts[1];
-    const constantVal = parseFloat(parts[2]);
-    // 如果游玩分数字段为空，则视为未填写
     const scoreField = parts[3];
-    const bestScore = scoreField !== "" ? parseInt(scoreField, 10) : null;
+    const bestScore = scoreField === "-" ? null : (scoreField !== "" ? parseInt(scoreField, 10) : null);
     const accuracyVal = parseFloat(parts[4]);
-    return calcSongData(title, grade, constantVal, bestScore, accuracyVal);
+    return calcSongData(title, grade, constantVal, bestScore, accuracyVal, scoreField);
   } else {
     alert("数据行格式错误，请检查每行至少包含：曲名, 等级, 定数, 准确率！");
     return null;
   }
 }
+
 function calculateLevel(score, acc) {
     if (score >= 1000000) {
       return acc === 100 ? 0 : 1; // X: 1000000 且 100% -> 0, 否则是 S -> 1
@@ -107,15 +103,13 @@ function calculateLevel(score, acc) {
   }
   
 // 计算单曲 nrk，并构造记录对象
-function calcSongData(title, grade, constantVal, bestScore, accuracyVal) {
-  // 将准确率从百分数转为小数
+function calcSongData(title, grade, constantVal, bestScore, accuracyVal, scoreField) {
   const accFraction = accuracyVal / 100;
   const singleNrkRaw = ((Math.exp(2 * accFraction) - 1) / (Math.exp(2) - 1)) * (constantVal + 5);
-  const bestLevel = (bestScore !== null)
-  ? calculateLevel(bestScore, accuracyVal)
-  : 8; // 未填写分数默认 F
+  const bestLevel = (scoreField === "-")
+    ? 9
+    : (bestScore !== null ? calculateLevel(bestScore, accuracyVal) : 8);
 
-  
   return {
     singleNrkRaw: singleNrkRaw,
     singleNrk: singleNrkRaw.toFixed(2),
@@ -123,20 +117,22 @@ function calcSongData(title, grade, constantVal, bestScore, accuracyVal) {
     name: title,
     grade: grade,
     bestScore: bestScore, // 若为 null 则显示时以 "-" 替代
-    bestAccuracy: accuracyVal, // 保留原始百分数（不带 %）
+    bestAccuracy: accuracyVal,
     bestLevel: bestLevel
   };
 }
+
 
 // 将当前数据写回存档文本：
 // 第一行为用户名，其余每行为：曲名,,,等级,,,定数,,,游玩分数(选填),,,准确率
 function formatInput(username, items) {
   const formattedItems = items.map(item => 
-    `${item.name},,,${item.grade},,,${item.constant},,,${item.bestScore !== null ? item.bestScore : ""},,,${item.bestAccuracy}`
+    `${item.name},,,${item.grade},,,${item.constant},,,${item.bestScore !== null ? item.bestScore : "-"},,,${item.bestAccuracy}`
   ).join('\n');
   
   document.getElementById('inputData').value = username + '\n' + formattedItems;
 }
+
 
 /* ========== 显示用户信息 ========== */
 function calculateAverageReality(results) {
