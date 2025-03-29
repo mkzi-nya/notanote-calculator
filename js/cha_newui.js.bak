@@ -391,7 +391,7 @@ function downloadImage() {
       ctx.font = `${13 * scale}px Arial`;
       ctx.textAlign = 'right';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = (i < 26) ? '#FAFAFA' : '#C9C9C9';
+      ctx.fillStyle = (i < 20) ? '#FAFAFA' : '#C9C9C9';
       ctx.fillText(`#${i + 1}`, x + cardWidth - 10, y + 5 * scale);
 
       let strScore = item.bestScore !== null ? item.bestScore.toString().padStart(7, '0') : "-";
