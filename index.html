@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title">Notanote 查分器</title>
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <link rel="stylesheet" href="new_UI.css">
+  <link href="./layui/css/layui.css" rel="stylesheet">
+  <input type="file" id="fileupLoad" style="display:none;" />
+  <script src="./js/plistjs/plist.js"></script>
+  <script src="./js/sql-wasm.js"></script>
+  <style>
+    #languageMenu{position:absolute;right:0;top:40px;display:none;background-color:#333;color:#eee;border:1px solid #444;border-radius:4px;padding:5px;min-width:100px;z-index:9999}#languageMenu div{margin:5px;cursor:pointer;padding:3px 5px}#languageMenu div:hover{background-color:#444}
+  </style>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L5K3QVRHFZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-L5K3QVRHFZ');
+</script>
+</head>
+<body>
+  <script src="./layui/layui.js"></script>
+  <script src="./new_ui.js"></script>
+  <div style="position:absolute;right:20px;top:20px;z-index:9999;">
+    <button id="languageButton" style="background:transparent;border:none;cursor:pointer;font-size:20px;">🌐</button>
+    <div id="languageMenu">
+      <div id="langZh">简体中文</div>
+      <div id="langZhTw">繁體中文</div>
+      <div id="langEn">English</div>
+      <div id="langJa">日本語</div>
+      <div id="langKo">한국어</div>
+      <div id="langRu">Русский</div>
+      <div id="langEs">Español</div>
+      <div id="langVi">Tiếng Việt</div>
+    </div>
+  </div>
+  <div class="layui-header header-opa">
+    <div class="layui-logo header-opa-bg2" style="padding:16px;">
+      <h1 style="color:turquoise;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;">Notanote calc <span style="font-size:medium;color:gold;">Ultra</span></h1>
+    </div>
+  </div>
+  <div style="padding:30px;text-align:center;display:flex;">
+    <div style="text-align:left;max-width:1200px;margin:auto;">
+      <div class="layui-card rccc">
+        <div class="layui-card-header"><h2 data-i18n="welcome">Welcome</h2></div>
+        <div class="layui-card-body">
+          <p data-i18n="greeting">你好，欢迎来到Nrk calc</p>
+          <p data-i18n="description">这是一个用于计算Notanote Nrk分数的网站，你可以在这里导入存档并解析。</p>
+          <hr>
+          <p><span data-i18n="qqGroup">QQ交流群：</span><a href="https://qm.qq.com/q/Utb6sNDvki" target="_blank"><span class="superlink" data-i18n="viewQQGroup">Milthm#-1洨巟羣</span></a></p>
+          <hr>
+          <p><span>其他工具：</span><a href="https://mkzi-nya.github.io/milthm-calculator-web/" target="_blank"><span class="superlink">Milthm查分器</span></a></p>
+          <hr>
+          <p><span data-i18n="link">友情链接：</span><a href="http://xuziyao.com/notanote/best/" target="_blank"><span class="superlink">Dason's Fork</span></a></p>
+        </div>
+      </div>
+      <div class="layui-card rccc">
+        <div class="layui-card-header" data-i18n="siteInfo">网站信息</div>
+        <div class="layui-card-body">
+          <p><span data-i18n="siteAuthor">网站作者：</span><a href="javascript:void(0);" onclick="show_author_info();" style="color:lightblue;text-decoration:none;" data-i18n="viewAuthor">查看</a></p>
+          <p data-i18n="lastUpdate">上次更新：3.14_11:03(UTC+8)</p>
+          <p data-i18n="updateCombined" style="white-space:pre-line;"></p>
+        </div>
+      </div>
+      <script>
+        if (typeof accessCount !== 'undefined' && accessCount != null) {document.getElementById("accessCount").innerHTML = accessCount;} else if (document.getElementById("accessCount")) {document.getElementById("accessCount").innerHTML = "DevMode";}
+      </script>
+      <div class="layui-card rccc">
+        <div class="layui-card-header" data-i18n="dataProcessing">数据处理</div>
+        <div class="layui-card-body">
+          <textarea id="inputData" class="layui-textarea" data-i18n-placeholder="inputDataPlaceholder">UserName
+追憶,,,SY,,,5.8,,,0,,,0
+追憶,,,EZ,,,3.4,,,0,,,0
+"SHE",,,SY,,,4.2,,,0,,,0
+Cursed Land (Acoustic),,,SY,,,5.1,,,0,,,0
+Lockdown (Tatsunoshin VIP),,,SY,,,7.1,,,0,,,0
+Lockdown (Tatsunoshin VIP),,,EZ,,,4.7,,,0,,,0
+Eltaw,,,SY,,,8.7,,,0,,,0
+Eltaw,,,EZ,,,4.8,,,0,,,0
+Eltaw,,,EX,,,5.7,,,0,,,0
+Summer Dream,,,SY,,,1.5,,,0,,,0
+Rainbow Flavor!,,,SY,,,7.2,,,0,,,0
+Rainbow Flavor!,,,EZ,,,3.4,,,0,,,0
+Airy Dream,,,SY,,,6.7,,,0,,,0
+Airy Dream,,,EZ,,,2.5,,,0,,,0
+夏の花,,,SY,,,5.7,,,0,,,0
+夏の花,,,EZ,,,2.8,,,0,,,0
+梦的彼岸,,,SY,,,4.0,,,0,,,0
+梦的彼岸,,,EZ,,,2.0,,,0,,,0
+Brand New Day,,,SY,,,6.3,,,0,,,0
+Star Chain,,,SY,,,5.6,,,0,,,0
+Apocalyptic,,,SY,,,6.1,,,0,,,0
+璃,,,SY,,,8.5,,,0,,,0
+Feeling Lonely,,,SY,,,5.0,,,0,,,0
+Feeling Lonely,,,EZ,,,3.6,,,0,,,0
+Feeling Lonely,,,EX,,,2.3,,,0,,,0
+Velocity,,,SY,,,6.6,,,0,,,0
+Velocity,,,EZ,,,4.2,,,0,,,0
+What U Wanna Be (Radio Edit),,,SY,,,7.3,,,0,,,0
+Enough,,,SY,,,6.8,,,0,,,0
+Enough,,,EZ,,,4.4,,,0,,,0
+The Fire,,,SP,,,9.8,,,0,,,0
+烁雨,,,SY,,,5.0,,,0,,,0
+cybernetic blazar,,,SY,,,8.5,,,0,,,0
+Innocent white,,,SY,,,9.4,,,0,,,0
+Innocent white,,,EZ+,,,5.3,,,0,,,0
+Innocent white,,,EZ,,,2.7,,,0,,,0
+爱上想象的你,,,SY,,,6.2,,,0,,,0
+爱上想象的你,,,EZ,,,2.5,,,0,,,0
+今天不是明天,,,SY,,,7.3,,,0,,,0
+今天不是明天,,,EZ,,,3.5,,,0,,,0
+甜涩之梦,,,SY,,,6.4,,,0,,,0
+恶修女——永火熔铸,,,SY,,,7.5,,,0,,,0
+恶修女——永火熔铸,,,EX,,,7.8,,,0,,,0
+纸上江山,,,SY,,,5.5,,,0,,,0
+纸上江山,,,EZ,,,3.0,,,0,,,0
+MARENOL,,,SY,,,7.9,,,0,,,0
+MARENOL,,,EX,,,4.3,,,0,,,0
+Altersist,,,SY,,,8.2,,,0,,,0
+Altersist,,,EZ,,,3.9,,,0,,,0
+Only 1 Minute,,,SY,,,1.0,,,0,,,0
+End Me,,,SY,,,7.0,,,0,,,0
+End Me,,,EZ,,,4.3,,,0,,,0
+Heavenly Sky (2022 Remake),,,SY,,,7.6,,,0,,,0
+Heavenly Sky (2022 Remake),,,EZ,,,4.6,,,0,,,0
+Kaze,,,SY,,,7.3,,,0,,,0
+YUMEND,,,SY,,,8.7,,,0,,,0
+YUMEND,,,EZ,,,4.1,,,0,,,0
+Chronomia,,,SY,,,9.1,,,0,,,0
+Chronomia,,,EZ,,,4.5,,,0,,,0
+Break Through Myself,,,SY,,,9.0,,,0,,,0
+Break Through Myself,,,EZ,,,5.4,,,0,,,0
+DayBreakers,,,SY,,,6.1,,,0,,,0
+DayBreakers,,,EZ,,,3.8,,,0,,,0
+Alice in a xxxxxxxx,,,SY,,,6.9,,,0,,,0
+Alice in a xxxxxxxx,,,EZ,,,4.1,,,0,,,0
+能量过载-オーバロード-,,,SY,,,9.5,,,0,,,0
+能量过载-オーバロード-,,,EZ,,,5.3,,,0,,,0
+life flashes before weeb eyes,,,SY,,,7.3,,,0,,,0
+life flashes before weeb eyes,,,EZ,,,4.4,,,0,,,0
+浮光 (The History),,,SY,,,5.8,,,0,,,0
+浮光 (The History),,,EZ,,,3.8,,,0,,,0
+《Ж》,,,SY,,,10.5,,,0,,,0
+《Ж》,,,EX,,,8.3,,,0,,,0
+Random,,,SY,,,8.4,,,0,,,0
+Abatement,,,SY,,,8.8,,,0,,,0
+Abatement,,,EZ,,,4.3,,,0,,,0
+self-dissociation,,,SY,,,9.1,,,0,,,0
+self-dissociation,,,EZ,,,5.0,,,0,,,0
+Nakunaru,,,SY,,,7.7,,,0,,,0
+slic.hertz,,,SY,,,8.6,,,0,,,0
+Le Porteur d'Ombre,,,SY,,,10.5,,,0,,,0
+Le Porteur d'Ombre,,,EZ,,,5.2,,,0,,,0
+弦色幻想诗,,,EZ,,,3.5,,,0,,,0
+弦色幻想诗,,,SY,,,7.5,,,0,,,0</textarea>
+          <hr/>
+          <button class="layui-btn layui-btn-primary" onclick="javascript:processData();" data-i18n="parse">解析</button>
+          <button class="layui-btn layui-btn-primary" onclick="javascript:upl();" data-i18n="uploadFile">上传文件</button>
+          <button class="layui-btn layui-btn-primary" onclick="javascript:downloadImage();" data-i18n="generateImage">生成图像</button>
+          <div id="picgen" style="display:none;">
+            <span class="layui-badge layui-bg-black" data-i18n="generatingImage">正在生成图片，由于需要下载图片资源，可能需要一些时间。若一直没有反应，可以多次尝试。</span>
+          </div>
+        </div>
+      </div>
+      <div class="layui-card rccc" id="usercontainer" style="display:none;">
+        <div class="layui-card-header" data-i18n="dataResult">数据处理结果</div>
+        <div class="layui-card-body">
+          <h3 data-i18n="userInfo">用户信息：</h3>
+          <h4 id="userInfo"></h4>
+          <hr/>
+          <h3 data-i18n="charts">图表：</h3>
+          <button class="layui-btn layui-btn-primary layui-border-green" onclick="javascript:changeColumns(1);" data-i18n="increaseColumn">增加列</button>
+          <button class="layui-btn layui-btn-primary layui-border-green" onclick="javascript:changeColumns(-1);" data-i18n="decreaseColumn">减少列</button>
+          <div class="container" id="output"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    let translations = {}, currentLang = 'zh', menuVisible = false;
+    function loadTranslations() {
+      fetch('lang.json').then(response => response.json()).then(data => {
+        translations = data;
+        let detected = (navigator.language || navigator.userLanguage).toLowerCase();
+        if (detected.startsWith('zh')) {detected = detected.includes('tw') || detected.includes('hk') || detected.includes('mo') ? 'zh-tw' : 'zh';}
+        currentLang = translations[detected] ? detected : 'en'; setLanguage(currentLang);
+      }).catch(error => {console.error('加载翻译文件失败:', error); setLanguage('en');});
+    }
+    function setLanguage(lang) {
+      currentLang = lang; document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {el.innerHTML = translations[lang][key];}
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang] && translations[lang][key]) {el.placeholder = translations[lang][key];}
+      });
+      menuVisible = false; document.getElementById('languageMenu').style.display = 'none';
+    }
+    function toggleLangMenu() {menuVisible = !menuVisible; document.getElementById('languageMenu').style.display = menuVisible ? 'block' : 'none';}
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('languageButton').addEventListener('click', toggleLangMenu);
+      document.getElementById('langZh').addEventListener('click', () => setLanguage('zh'));
+      document.getElementById('langZhTw').addEventListener('click', () => setLanguage('zh-tw'));
+      document.getElementById('langEn').addEventListener('click', () => setLanguage('en'));
+      document.getElementById('langJa').addEventListener('click', () => setLanguage('ja'));
+      document.getElementById('langKo').addEventListener('click', () => setLanguage('ko'));
+      document.getElementById('langRu').addEventListener('click', () => setLanguage('ru'));
+      document.getElementById('langEs').addEventListener('click', () => setLanguage('es'));
+      document.getElementById('langVi').addEventListener('click', () => setLanguage('vi'));
+      loadTranslations();
+    });
+  </script>
+  <script src="./js/cha_newui.js"></script>
+</body>
+</html>
