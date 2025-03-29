@@ -140,21 +140,28 @@ function formatInput(username, items) {
 
 /* ========== 显示用户信息 ========== */
 function calculateAverageReality(results) {
+  // Filter and sort the results, select the top 26
   const sorted = results
-    .filter(item => item.singleNrkRaw > 0)
-    .sort((a, b) => b.singleNrkRaw - a.singleNrkRaw)
-    .slice(0, 26);
-
-  let weightedSum = 0;
-  let weightSum = 0;
+    .filter(item => item.singleNrkRaw > 0) // Exclude results where singleNrkRaw is 0 or less
+    .sort((a, b) => b.singleNrkRaw - a.singleNrkRaw) // Sort in descending order
+    .slice(0, 26); // Take the top 26 results
+  
+  let rank_m_weight_sum = 0;
+  let weight_sum = 0;
 
   for (let i = 0; i < sorted.length; i++) {
-    const weight = 1 - 0.02 * i; // ω_i = 100% - 2%(i - 1)
-    weightedSum += sorted[i].singleNrkRaw * weight;
-    weightSum += weight;
+    // Calculate weight using ω_i = 100% - 2% * (i - 1)
+    const weight = 1 - 0.02 * (i+1);
+    
+    // Calculate the weighted rank sum
+    rank_m_weight_sum += sorted[i].singleNrkRaw * weight;
+    
+    // Calculate the total weight sum
+    weight_sum += weight;
   }
 
-  return weightSum > 0 ? (weightedSum / weightSum).toFixed(2) : '0.00';
+  // Return the normalized NRK value (decimals rounded to 2 places)
+  return weight_sum > 0 ? (rank_m_weight_sum / weight_sum).toFixed(2) : '0.00';
 }
 
   
