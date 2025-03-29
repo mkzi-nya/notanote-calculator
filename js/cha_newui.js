@@ -353,7 +353,7 @@ function downloadImage() {
 
   function preloadImages(ctx, canvas) {
     const items = window.processedItems || [];
-    const maxItems = Math.min(22, items.length);
+    const maxItems = Math.min(30, items.length); // 改为绘制30个卡片
     const imagePromises = [];
 
     for (let i = 0; i < maxItems; i++) {
@@ -372,20 +372,18 @@ function downloadImage() {
 
   function drawCards(ctx, canvas, items, images) {
     const scale = 1.3;
-    const cardWidth = 340 * scale;
+    const cardWidth = 250 * scale; // 设置卡片宽度为240
     const cardHeight = 100 * scale;
-    const imgWidth = 142 * scale;
-    const imgHeight = 80 * scale;
-    const rankIconSize = 70 * scale;
+    const imgSize = 80 * scale; // 设置图片为正方形
 
-    const xOffset = 110;
+    const xOffset = 90;
     const yOffset = 350;
-    const columnSpacing = 400 * scale;
+    const columnSpacing = 270 * scale; // 调整列间距
     const rowSpacing = 125 * scale;
 
-    items.slice(0, 22).forEach((item, i) => {
-      const x = xOffset + (i % 2) * columnSpacing;
-      const y = yOffset + Math.floor(i / 2) * rowSpacing - ((i % 2 === 0) ? 50 : 0);
+    items.slice(0, 30).forEach((item, i) => { // 绘制30个卡片
+      const x = xOffset + (i % 3) * columnSpacing; // 一列3个
+      const y = yOffset + Math.floor(i / 3) * rowSpacing;
 
       ctx.fillStyle = 'rgba(128, 128, 128, 0.4)';
       ctx.fillRect(x, y, cardWidth, cardHeight);
@@ -407,10 +405,10 @@ function downloadImage() {
         scoreColor.addColorStop(1, '#D8C3FA');
       }
 
-      ctx.font = `${30 * scale}px Arial`;
+      ctx.font = `${28 * scale}px Arial`;
       ctx.textAlign = 'left';
       ctx.fillStyle = scoreColor;
-      ctx.fillText(strScore, x + 160 * scale, y + 40 * scale);
+      ctx.fillText(strScore, x + 95 * scale, y + 40 * scale);
 
       const maxTextWidth = 200;
       let currentFontSize = 19 * scale;
@@ -422,17 +420,17 @@ function downloadImage() {
         textWidth = ctx.measureText(item.name).width;
       }
       ctx.fillStyle = '#FFFFFF';
-      ctx.fillText(item.name, x + 163 * scale, y + 18 * scale);
+      ctx.fillText(item.name, x + 98 * scale, y + 18 * scale);
 
       ctx.font = `${15 * scale}px Arial`;
       ctx.fillStyle = '#FFFFFF';
       const accText = `${item.bestAccuracy}%`;
-      ctx.fillText(`${item.grade} ${parseFloat(item.constant).toFixed(1)} > ${item.singleNrk}   ${accText}`, x + 160 * scale, y + 75 * scale);
+      ctx.fillText(`${item.grade} ${parseFloat(item.constant).toFixed(1)} > ${item.singleNrk}   ${accText}`, x + 95 * scale, y + 75 * scale);
 
-      ctx.drawImage(images[i][0], x + 10 * scale, y + 10 * scale, imgWidth, imgHeight);
+      ctx.drawImage(images[i][0], x + 10 * scale, y + 10 * scale, imgSize, imgSize); // 图片为正方形
 
       if (images[i][1]) {
-        ctx.drawImage(images[i][1], x + 270 * scale, y + 20 * scale, rankIconSize, rankIconSize);
+        ctx.drawImage(images[i][1], x + 190 * scale, y + 20 * scale, 70 * scale, 70 * scale);
       }
     });
 
