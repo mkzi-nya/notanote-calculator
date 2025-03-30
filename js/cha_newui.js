@@ -188,7 +188,7 @@ function processSong(line) {
     const accuracyVal = parseFloat(parts[3]);
     return calcSongData(title, grade, constantVal, bestScore, accuracyVal, scoreField);
   } else {
-    alert("数据行格式错误，请检查每行至少包含：曲名, 等级, 定数, 准确率！");
+    alert("数据行格式错误，请检查每行至少包含：曲名, 等级, 准确率！");
     return null;
   }
 }
