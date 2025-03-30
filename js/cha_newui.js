@@ -429,7 +429,7 @@ function downloadImage() {
 
   // 动态调整画布高度，保持宽度不变，最小高度为当前代码中的高度
   const baseHeight = 2200;
-  const newHeight = baseHeight + Math.ceil((actualCardCount / 3) * 125); // 每3张卡片增加125像素的高度
+  const newHeight = 1200+Math.ceil((actualCardCount / 3) * 125); // 每3张卡片增加125像素的高度
   canvas.height = Math.max(baseHeight, newHeight);
 
   const ctx = canvas.getContext('2d');
