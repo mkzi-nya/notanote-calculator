@@ -536,7 +536,7 @@ function downloadImage() {
       ctx.drawImage(images[i][0], x + 10 * scale, y + 10 * scale, imgSize, imgSize); // 图片为正方形
 
       if (images[i][1]) {
-        ctx.drawImage(images[i][1], x + 190 * scale, y + 20 * scale, 70 * scale, 70 * scale);
+        ctx.drawImage(images[i][1], x + 200 * scale, y + 26 * scale, 53 * scale, 53 * scale);
       }
     });
 
