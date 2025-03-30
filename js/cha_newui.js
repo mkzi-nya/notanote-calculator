@@ -14,9 +14,103 @@ document.addEventListener('DOMContentLoaded', () => {
   container.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
 });
 
+/* ========== 常量字典 ========== */
+const constants = {
+  1: { constant: 5.3, category: "SY", name: "追憶" },
+  2: { constant: 3.0, category: "EZ", name: "追憶" },
+  3: { constant: 3.0, category: "SY", name: '"SHE"' },
+  4: { constant: 4.5, category: "SY", name: "Cursed Land (Acoustic)" },
+  5: { constant: 7.1, category: "SY", name: "Lockdown (Tatsunoshin VIP)" },
+  6: { constant: 3.5, category: "EZ", name: "Lockdown (Tatsunoshin VIP)" },
+  7: { constant: 8.6, category: "SY", name: "Eltaw" },
+  8: { constant: 3.0, category: "EZ", name: "Eltaw" },
+  9: { constant: 4.5, category: "TL", name: "Eltaw" },
+  10: { constant: 2.5, category: "SY", name: "Summer Dream" },
+  11: { constant: 7.0, category: "SY", name: "Rainbow Flavor!" },
+  12: { constant: 1.5, category: "EZ", name: "Rainbow Flavor!" },
+  13: { constant: 7.6, category: "SY", name: "Airy Dream" },
+  14: { constant: 1.0, category: "EZ", name: "Airy Dream" },
+  15: { constant: 5.0, category: "SY", name: "夏の花" },
+  16: { constant: 1.5, category: "EZ", name: "夏の花" },
+  17: { constant: 3.5, category: "SY", name: "梦的彼岸" },
+  18: { constant: 1.0, category: "EZ", name: "梦的彼岸" },
+  19: { constant: 6.0, category: "SY", name: "Brand New Day" },
+  20: { constant: 5.0, category: "SY", name: "烁雨" },
+  21: { constant: 9.0, category: "SY", name: "cybernetic blazar" },
+  22: { constant: 9.7, category: "SY", name: "Innocent white" },
+  23: { constant: 5.2, category: "EZ+", name: "Innocent white" },
+  24: { constant: 2.5, category: "EZ", name: "Innocent white" },
+  25: { constant: 6.7, category: "SY", name: "Vestige of Dreams" },
+  26: { constant: 8.3, category: "SY", name: "Elsorhg" },
+  27: { constant: 10.2, category: "SY", name: "Meltovt Necrosys" },
+  28: { constant: 5.8, category: "EZ", name: "Meltovt Necrosys" },
+  29: { constant: 9.6, category: "SY", name: "Broken Conviction" },
+  30: { constant: 5.4, category: "EZ", name: "Broken Conviction" },
+  31: { constant: 10.5, category: "SY", name: "Le Porteur d'Ombre" },
+  32: { constant: 5.7, category: "EZ", name: "Le Porteur d'Ombre" },
+  33: { constant: 4.5, category: "SY", name: "Star Chain" },
+  34: { constant: 5.7, category: "SY", name: "Apocalyptic" },
+  35: { constant: 7.7, category: "SY", name: "璃" },
+  36: { constant: 6.0, category: "SY", name: "Last Season" },
+  37: { constant: 8.0, category: "SY", name: "Meltovt Necrosys (UraniumW Remix)" },
+  38: { constant: 3.5, category: "TL", name: "Meltovt Necrosys (UraniumW Remix)" },
+  39: { constant: 9.6, category: "SY", name: "Meltovt Necrosys (Salty Salt Remix)" },
+  40: { constant: 4.0, category: "EZ", name: "Meltovt Necrosys (Salty Salt Remix)" },
+  41: { constant: 10.4, category: "SY", name: "Aether Ingita!" },
+  42: { constant: 5.8, category: "EZ", name: "Aether Ingita!" },
+  43: { constant: 6.1, category: "SY", name: "爱上想象的你" },
+  44: { constant: 2.5, category: "EZ", name: "爱上想象的你" },
+  45: { constant: 7.9, category: "SY", name: "今天不是明天" },
+  46: { constant: 3.5, category: "EZ", name: "今天不是明天" },
+  47: { constant: 6.2, category: "SY", name: "甜涩之梦" },
+  48: { constant: 7.3, category: "SY", name: "恶修女——永火熔铸" },
+  49: { constant: 8.1, category: "TL", name: "恶修女——永火熔铸" },
+  50: { constant: 5.1, category: "SY", name: "Feeling Lonely" },
+  51: { constant: 2.0, category: "TL", name: "Feeling Lonely" },
+  52: { constant: 6.6, category: "SY", name: "Velocity" },
+  53: { constant: 2.0, category: "EZ", name: "Velocity" },
+  54: { constant: 7.1, category: "SY", name: "What U Wanna Be (Radio Edit)" },
+  55: { constant: 6.8, category: "SY", name: "Enough" },
+  56: { constant: 0.0, category: "SP", name: "The Fire" },
+  57: { constant: 5.9, category: "SY", name: "纸上江山" },
+  58: { constant: 1.5, category: "EZ", name: "纸上江山" },
+  59: { constant: 7.8, category: "SY", name: "MARENOL" },
+  60: { constant: 2.5, category: "TL", name: "MARENOL" },
+  61: { constant: 8.2, category: "SY", name: "Altersist" },
+  62: { constant: 3.0, category: "EZ", name: "Altersist" },
+  63: { constant: 1.0, category: "SY", name: "Only 1 Minute" },
+  64: { constant: 6.5, category: "SY", name: "End Me" },
+  65: { constant: 1.5, category: "EZ", name: "End Me" },
+  66: { constant: 7.4, category: "SY", name: "Heavenly Sky" },
+  67: { constant: 4.0, category: "EZ", name: "Heavenly Sky" },
+  68: { constant: 7.0, category: "SY", name: "Kaze" },
+  69: { constant: 8.7, category: "SY", name: "YUMEND" },
+  70: { constant: 3.0, category: "EZ", name: "YUMEND" },
+  71: { constant: 9.1, category: "SY", name: "Chronomia" },
+  72: { constant: 9.3, category: "SY", name: "Break Through Myself" },
+  73: { constant: 6.6, category: "SY", name: "DayBreakers" },
+  74: { constant: 7.5, category: "SY", name: "Alice in a xxxxxxxx" },
+  75: { constant: 9.4, category: "SY", name: "能量过载-オーバロード-" },
+  76: { constant: 5.6, category: "EZ", name: "能量过载-オーバロード-" },
+  77: { constant: 7.7, category: "SY", name: "life flashes before weeb eyes" },
+  78: { constant: 4.0, category: "EZ", name: "life flashes before weeb eyes" },
+  79: { constant: 5.5, category: "SY", name: "浮光 (The History)" },
+  80: { constant: 3.0, category: "EZ", name: "浮光 (The History)" },
+  81: { constant: 10.5, category: "SY", name: "《Ж》" },
+  82: { constant: 8.6, category: "TL", name: "《Ж》" },
+  83: { constant: 8.7, category: "SY", name: "Random" },
+  84: { constant: 8.5, category: "SY", name: "Abatement" },
+  85: { constant: 3.5, category: "EZ", name: "Abatement" },
+  86: { constant: 9.5, category: "SY", name: "self-dissociation" },
+  87: { constant: 4.5, category: "EZ", name: "self-dissociation" },
+  88: { constant: 8.3, category: "SY", name: "Nakunaru" },
+  89: { constant: 8.9, category: "SY", name: "slic.hertz" },
+  90: { constant: 2.0, category: "EZ", name: "弦色幻想诗" },
+  91: { constant: 7.5, category: "SY", name: "弦色幻想诗" }
+};
+
 /* ========== 核心流程 ========== */
-// 解析时先判断第一行是否为用户名（不含",,,"）
-// 如果第一行中含有 ",,," 则认为整个文件都是数据，用户名设为 "UserName"
+/* ========== 核心流程 ========== */
 function processData() {
     const rawData = document.getElementById('inputData').value;
     const lines = rawData.split('\n').map(line => line.trim()).filter(line => line !== "");
@@ -33,8 +127,23 @@ function processData() {
       username = "UserName";
       dataStartIndex = 0;
     }
-    const items = lines.slice(dataStartIndex).map(processSong).filter(item => item !== null);
-    
+
+    // 存储跳过的曲目及其难度
+    const skippedSongs = [];
+
+    const items = lines.slice(dataStartIndex).map(line => {
+      const item = processSong(line);
+      if (item === null) {
+        const parts = line.split(',,,');
+        skippedSongs.push(`${parts[0]} (${parts[1]})`); // 保存曲目名称和难度
+      }
+      return item;
+    }).filter(item => item !== null);
+
+    if (skippedSongs.length > 0) {
+        alert("以下曲目未能解析并已跳过：\n" + skippedSongs.join("\n"));
+    }
+
     // 全局保存解析后的结果
     window.processedItems = items;
     
@@ -52,29 +161,31 @@ function processData() {
     formatInput(username, items);
 }
 
-/* ========== 工具函数 ========== */
-// 此处不再强制将所有数据合并为一行
-function cleanInputData(data) {
-    return data;
-}
-
-// 新存档格式解析：
-// 每一行字段以 ",,," 分隔
-// 支持 5 字段（含游玩分数）或 4 字段（未填写游玩分数）
+/* ========== 核心数据处理 ========== */
 function processSong(line) {
   const parts = line.split(',,,').map(s => s.trim());
-  if (parts.length === 4) {
-    // 游玩分数缺失，自动补 "-"
-    parts.splice(3, 0, "-");
+  
+  // 如果字段数不足4，补充"-"
+  if (parts.length === 3) {
+    parts.push("-");
   }
 
-  if (parts.length >= 5) {
+  if (parts.length >= 4) {
     const title = parts[0];
     const grade = parts[1];
-    const constantVal = parseFloat(parts[2]);
-    const scoreField = parts[3];
+    
+    // 根据曲名和难度来查找定数
+    const constantData = Object.values(constants).find(item => item.name === title && item.category === grade);
+    
+    if (!constantData) {
+      // 如果无法找到该曲目的定数，跳过该数据
+      return null;
+    }
+    
+    const constantVal = constantData.constant;
+    const scoreField = parts[2];
     const bestScore = scoreField === "-" ? null : (scoreField !== "" ? parseInt(scoreField, 10) : null);
-    const accuracyVal = parseFloat(parts[4]);
+    const accuracyVal = parseFloat(parts[3]);
     return calcSongData(title, grade, constantVal, bestScore, accuracyVal, scoreField);
   } else {
     alert("数据行格式错误，请检查每行至少包含：曲名, 等级, 定数, 准确率！");
@@ -82,27 +193,7 @@ function processSong(line) {
   }
 }
 
-function calculateLevel(score, acc) {
-    if (score >= 1000000) {
-      return acc === 100 ? 0 : 1; // X: 1000000 且 100% -> 0, 否则是 S -> 1
-    } else if (score >= 990000) {
-      return 2; // S
-    } else if (score >= 970000) {
-      return 3; // A+
-    } else if (score >= 950000) {
-      return 4; // A
-    } else if (score >= 930000) {
-      return 5; // A-
-    } else if (score >= 910000) {
-      return 6; // B
-    } else if (score >= 880000) {
-      return 7; // C
-    } else {
-      return 8; // F
-    }
-  }
-  
-// 计算单曲 nrk，并构造记录对象
+/* ========== 计算单曲数据 ========== */
 function calcSongData(title, grade, constantVal, bestScore, accuracyVal, scoreField) {
   const accFraction = accuracyVal / 100;
   const singleNrkRaw = ((Math.exp(2 * accFraction) - 1) / (Math.exp(2) - 1)) * (constantVal + 5);
@@ -122,12 +213,31 @@ function calcSongData(title, grade, constantVal, bestScore, accuracyVal, scoreFi
   };
 }
 
+/* ========== 计算等级 ========== */
+function calculateLevel(score, acc) {
+    if (score >= 1000000) {
+      return acc === 100 ? 0 : 1; // X: 1000000 且 100% -> 0, 否则是 S -> 1
+    } else if (score >= 990000) {
+      return 2; // S
+    } else if (score >= 970000) {
+      return 3; // A+
+    } else if (score >= 950000) {
+      return 4; // A
+    } else if (score >= 930000) {
+      return 5; // A-
+    } else if (score >= 910000) {
+      return 6; // B
+    } else if (score >= 880000) {
+      return 7; // C
+    } else {
+      return 8; // F
+    }
+}
 
-// 将当前数据写回存档文本：
-// 第一行为用户名，其余每行为：曲名,,,等级,,,定数,,,游玩分数(选填),,,准确率
+/* ========== 格式化输入 ========== */
 function formatInput(username, items) {
   const formattedItems = items.map(item => 
-    `${item.name},,,${item.grade},,,${item.constant},,,${item.bestScore !== null ? item.bestScore : "-"},,,${item.bestAccuracy}`
+    `${item.name},,,${item.grade},,,${item.bestScore !== null ? item.bestScore : "-"},,,${item.bestAccuracy}`
   ).join('\n');
   
   document.getElementById('inputData').value = username + '\n' + formattedItems;
