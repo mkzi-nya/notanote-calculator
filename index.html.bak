@@ -283,40 +283,6 @@ slic.hertz,,,SY,,,-,,,0
         console.log("绘制卡片数量设置为: " + cardCount);
         closeSettings();
     }
-    let translations = {}, currentLang = 'zh', menuVisible = false;
-    function loadTranslations() {
-      fetch('lang.json').then(response => response.json()).then(data => {
-        translations = data;
-        let detected = (navigator.language || navigator.userLanguage).toLowerCase();
-        if (detected.startsWith('zh')) {detected = detected.includes('tw') || detected.includes('hk') || detected.includes('mo') ? 'zh-tw' : 'zh';}
-        currentLang = translations[detected] ? detected : 'en'; setLanguage(currentLang);
-      }).catch(error => {console.error('加载翻译文件失败:', error); setLanguage('en');});
-    }
-    function setLanguage(lang) {
-      currentLang = lang; document.documentElement.lang = lang;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {el.innerHTML = translations[lang][key];}
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang] && translations[lang][key]) {el.placeholder = translations[lang][key];}
-      });
-      menuVisible = false; document.getElementById('languageMenu').style.display = 'none';
-    }
-    function toggleLangMenu() {menuVisible = !menuVisible; document.getElementById('languageMenu').style.display = menuVisible ? 'block' : 'none';}
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('languageButton').addEventListener('click', toggleLangMenu);
-      document.getElementById('langZh').addEventListener('click', () => setLanguage('zh'));
-      document.getElementById('langZhTw').addEventListener('click', () => setLanguage('zh-tw'));
-      document.getElementById('langEn').addEventListener('click', () => setLanguage('en'));
-      document.getElementById('langJa').addEventListener('click', () => setLanguage('ja'));
-      document.getElementById('langKo').addEventListener('click', () => setLanguage('ko'));
-      document.getElementById('langRu').addEventListener('click', () => setLanguage('ru'));
-      document.getElementById('langEs').addEventListener('click', () => setLanguage('es'));
-      document.getElementById('langVi').addEventListener('click', () => setLanguage('vi'));
-      loadTranslations();
-    });
 </script>
   <script src="./js/cha_newui.js"></script>
 </body>
