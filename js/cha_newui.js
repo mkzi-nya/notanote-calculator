@@ -418,11 +418,34 @@ function downloadImage() {
   console.log("opening genPicDialog");
   const canvas = document.createElement('canvas');
   canvas.width = 1200;
-  canvas.height = 2200;
+
+  // 获取用户输入的卡片数量
+  const cardCount = parseInt(document.getElementById('cardCount').value, 10);
+  const maxItems = Math.max(1, cardCount); // 确保至少有1个卡片
+
+  // 获取数据中实际的卡片数量
+  const items = window.processedItems || [];
+  const actualCardCount = Math.min(maxItems, items.length); // 实际绘制卡片数量，不能超过数据中的数量
+
+  // 动态调整画布高度，保持宽度不变，最小高度为当前代码中的高度
+  const baseHeight = 2200;
+  const newHeight = baseHeight + Math.ceil((actualCardCount / 3) * 125); // 每3张卡片增加125像素的高度
+  canvas.height = Math.max(baseHeight, newHeight);
+
   const ctx = canvas.getContext('2d');
 
-  loadImage('./jpgs/查分图.jpg')
-    .catch(() => null)
+  // 获取背景图设置
+  const bgImageFile = document.getElementById('bgImage').files[0];
+  let bgImagePromise = Promise.resolve(null);
+
+  // 如果选择了背景图文件，加载它
+  if (bgImageFile) {
+    bgImagePromise = loadImage(URL.createObjectURL(bgImageFile));
+  } else {
+    bgImagePromise = loadImage('./jpgs/查分图.jpg'); // 默认背景图
+  }
+
+  bgImagePromise
     .then(bgImage => {
       if (bgImage) {
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
@@ -454,15 +477,14 @@ function downloadImage() {
       ctx.font = '30px Arial';
       ctx.fillText('---', 100, 180);
 
-      preloadImages(ctx, canvas);
+      preloadImages(ctx, canvas, actualCardCount);
     });
 
-  function preloadImages(ctx, canvas) {
+  function preloadImages(ctx, canvas, actualCardCount) {
     const items = window.processedItems || [];
-    const maxItems = Math.min(30, items.length); // 改为绘制30个卡片
     const imagePromises = [];
 
-    for (let i = 0; i < maxItems; i++) {
+    for (let i = 0; i < actualCardCount; i++) {
       const encodedName = encodeURIComponent(items[i].name);
       const imgPath = `./jpgs/${encodedName}.jpg`;
       const rankImgPath = `./jpgs/${items[i].bestLevel}.png`;
@@ -473,10 +495,10 @@ function downloadImage() {
       imagePromises.push(Promise.all([songImgPromise, rankImgPromise]));
     }
 
-    Promise.all(imagePromises).then(images => drawCards(ctx, canvas, items, images));
+    Promise.all(imagePromises).then(images => drawCards(ctx, canvas, items, images, actualCardCount));
   }
 
-  function drawCards(ctx, canvas, items, images) {
+  function drawCards(ctx, canvas, items, images, actualCardCount) {
     const scale = 1.3;
     const cardWidth = 250 * scale; // 设置卡片宽度为240
     const cardHeight = 100 * scale;
@@ -487,7 +509,7 @@ function downloadImage() {
     const columnSpacing = 270 * scale; // 调整列间距
     const rowSpacing = 125 * scale;
 
-    items.slice(0, 30).forEach((item, i) => { // 绘制30个卡片
+    items.slice(0, actualCardCount).forEach((item, i) => { // 绘制实际卡片数量
       const x = xOffset + (i % 3) * columnSpacing; // 一列3个
       const y = yOffset + Math.floor(i / 3) * rowSpacing;
 

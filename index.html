@@ -12,9 +12,66 @@
   <script src="./js/plistjs/plist.js"></script>
   <script src="./js/sql-wasm.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/decimal.js/10.2.1/decimal.min.js"></script>
-  <style>
+<style>
     #languageMenu{position:absolute;right:0;top:40px;display:none;background-color:#333;color:#eee;border:1px solid #444;border-radius:4px;padding:5px;min-width:100px;z-index:9999}#languageMenu div{margin:5px;cursor:pointer;padding:3px 5px}#languageMenu div:hover{background-color:#444}
-  </style>
+    #settingsModal { 
+        display: none; 
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        background: #2a2a2a; 
+        color: #fff; 
+        padding: 30px; 
+        border-radius: 15px; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.7); 
+        z-index: 10000;
+        width: 300px;
+    }
+    #settingsModal h3 { 
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    #settingsModal input, 
+    #settingsModal button { 
+        margin-bottom: 15px;
+        padding: 8px;
+        width: 100%;
+        background-color: #444;
+        color: #fff;
+        border: 1px solid #555;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+    #settingsModal input:focus, 
+    #settingsModal button:focus { 
+        outline: none; 
+        border-color: #888;
+    }
+    #settingsModal button {
+        width: 48%;
+        display: inline-block;
+        cursor: pointer;
+    }
+    #settingsModal .cancel-btn {
+        background-color: #777;
+    }
+    #settingsModal .apply-btn {
+        background-color: #5cb85c;
+    }
+    #overlay { 
+        display: none; 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background-color: rgba(0,0,0,0.7); 
+        z-index: 9999; 
+    }
+</style>
+
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5K3QVRHFZ"></script>
 <script>
@@ -71,9 +128,6 @@
           <p data-i18n="updateCombined" style="white-space:pre-line;"></p>
         </div>
       </div>
-      <script>
-        if (typeof accessCount !== 'undefined' && accessCount != null) {document.getElementById("accessCount").innerHTML = accessCount;} else if (document.getElementById("accessCount")) {document.getElementById("accessCount").innerHTML = "DevMode";}
-      </script>
       <div class="layui-card rccc">
         <div class="layui-card-header" data-i18n="dataProcessing">数据处理</div>
         <div class="layui-card-body">
@@ -169,12 +223,12 @@ Nakunaru,,,SY,,,-,,,0
 slic.hertz,,,SY,,,-,,,0
 弦色幻想诗,,,EZ,,,-,,,0
 弦色幻想诗,,,SY,,,-,,,0
-
 </textarea>
           <hr/>
           <button class="layui-btn layui-btn-primary" onclick="javascript:processData();" data-i18n="parse">解析</button>
           <button class="layui-btn layui-btn-primary" onclick="javascript:upl();" data-i18n="uploadFile">上传文件</button>
           <button class="layui-btn layui-btn-primary" onclick="javascript:downloadImage();" data-i18n="generateImage">生成图像</button>
+          <button class="layui-btn layui-btn-primary" onclick="showSettings();" data-i18n="settings">查分图设置</button>
           <div id="picgen" style="display:none;">
             <span class="layui-badge layui-bg-black" data-i18n="generatingImage">正在生成图片，由于需要下载图片资源，可能需要一些时间。若一直没有反应，可以多次尝试。</span>
           </div>
@@ -194,42 +248,42 @@ slic.hertz,,,SY,,,-,,,0
       </div>
     </div>
   </div>
+  <div id="overlay" onclick="closeSettings()"></div>
+<div id="settingsModal">
+    <h3 data-i18n="settingsTitle">查分图设置</h3>
+    <label for="cardCount" data-i18n="cardCountLabel">绘制卡片数量:</label>
+    <input type="number" id="cardCount" value="30" min="1" data-i18n-placeholder="cardCountPlaceholder"><br>
+    <label for="bgImage" data-i18n="bgImageLabel">更换背景图:</label>
+    <input type="file" id="bgImage" accept="image/*" data-i18n-placeholder="bgImagePlaceholder"><br>
+    <button class="cancel-btn" onclick="closeSettings()" data-i18n="cancel">取消</button>
+    <button class="apply-btn" onclick="applySettings()" data-i18n="apply">应用</button>
+</div>
   <script>
-    let translations = {}, currentLang = 'zh', menuVisible = false;
-    function loadTranslations() {
-      fetch('lang.json').then(response => response.json()).then(data => {
-        translations = data;
-        let detected = (navigator.language || navigator.userLanguage).toLowerCase();
-        if (detected.startsWith('zh')) {detected = detected.includes('tw') || detected.includes('hk') || detected.includes('mo') ? 'zh-tw' : 'zh';}
-        currentLang = translations[detected] ? detected : 'en'; setLanguage(currentLang);
-      }).catch(error => {console.error('加载翻译文件失败:', error); setLanguage('en');});
+    function showSettings() {
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('settingsModal').style.display = 'block';
     }
-    function setLanguage(lang) {
-      currentLang = lang; document.documentElement.lang = lang;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {el.innerHTML = translations[lang][key];}
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang] && translations[lang][key]) {el.placeholder = translations[lang][key];}
-      });
-      menuVisible = false; document.getElementById('languageMenu').style.display = 'none';
+
+    function closeSettings() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('settingsModal').style.display = 'none';
     }
-    function toggleLangMenu() {menuVisible = !menuVisible; document.getElementById('languageMenu').style.display = menuVisible ? 'block' : 'none';}
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('languageButton').addEventListener('click', toggleLangMenu);
-      document.getElementById('langZh').addEventListener('click', () => setLanguage('zh'));
-      document.getElementById('langZhTw').addEventListener('click', () => setLanguage('zh-tw'));
-      document.getElementById('langEn').addEventListener('click', () => setLanguage('en'));
-      document.getElementById('langJa').addEventListener('click', () => setLanguage('ja'));
-      document.getElementById('langKo').addEventListener('click', () => setLanguage('ko'));
-      document.getElementById('langRu').addEventListener('click', () => setLanguage('ru'));
-      document.getElementById('langEs').addEventListener('click', () => setLanguage('es'));
-      document.getElementById('langVi').addEventListener('click', () => setLanguage('vi'));
-      loadTranslations();
-    });
-  </script>
+
+    function applySettings() {
+        var cardCount = document.getElementById('cardCount').value;
+        var bgImage = document.getElementById('bgImage').files[0];
+        if (bgImage) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Use the background image data URL (e.target.result)
+                console.log("背景图设置为: " + e.target.result);
+            };
+            reader.readAsDataURL(bgImage);
+        }
+        console.log("绘制卡片数量设置为: " + cardCount);
+        closeSettings();
+    }
+</script>
   <script src="./js/cha_newui.js"></script>
 </body>
 </html>
