@@ -71,7 +71,7 @@ const constants = {
   53: { constant: 2.0, category: "EZ", name: "Velocity" },
   54: { constant: 7.1, category: "SY", name: "What U Wanna Be (Radio Edit)" },
   55: { constant: 6.8, category: "SY", name: "Enough" },
-  56: { constant: 0.0, category: "SP", name: "The Fire" },
+  56: { constant: -5.0, category: "SP", name: "The Fire" },
   57: { constant: 5.9, category: "SY", name: "纸上江山" },
   58: { constant: 1.5, category: "EZ", name: "纸上江山" },
   59: { constant: 7.8, category: "SY", name: "MARENOL" },
@@ -109,7 +109,6 @@ const constants = {
   91: { constant: 7.5, category: "SY", name: "弦色幻想诗" }
 };
 
-/* ========== 核心流程 ========== */
 /* ========== 核心流程 ========== */
 function processData() {
     const rawData = document.getElementById('inputData').value;
@@ -196,7 +195,7 @@ function processSong(line) {
 /* ========== 计算单曲数据 ========== */
 function calcSongData(title, grade, constantVal, bestScore, accuracyVal, scoreField) {
   const accFraction = accuracyVal / 100;
-  const singleNrkRaw = ((Math.exp(2 * accFraction) - 1) / (Math.exp(2) - 1)) * (constantVal + 5);
+  const singleNrkRaw = Math.max(((Math.exp(2 * accFraction) - 1) / (Math.exp(2) - 1)) * (constantVal + 5));
   const bestLevel = (scoreField === "-")
     ? 9
     : (bestScore !== null ? calculateLevel(bestScore, accuracyVal) : 8);
