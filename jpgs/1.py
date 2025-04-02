@@ -14,7 +14,7 @@ for filename in os.listdir(current_directory):
         # 打开图片
         with Image.open(file_path) as img:
             # 调整图片大小
-            img = img.resize((512, 512))
+            # img = img.resize((512, 512))
             
             # 构造新的文件名，修改扩展名为 .jpg
             new_filename = os.path.splitext(filename)[0] + ".jpg"
