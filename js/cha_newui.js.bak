@@ -258,7 +258,7 @@ function calculateAverageReality(results) {
 
   // 计算并返回最终的 Nrk，四舍五入到 4 位小数
   const nrk = rank_m_weight_sum / 19.5;
-  return nrk.toFixed(4);
+  return nrk.toFixed(4) : '0.0000';
 }
 
 

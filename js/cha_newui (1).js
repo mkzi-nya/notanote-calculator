@@ -152,6 +152,7 @@ function processData() {
     // 根据单曲 nrk 值降序排序
     items.sort((a, b) => b.singleNrkRaw - a.singleNrkRaw);
     
+    // 显示用户信息（显示用户 nrk 平均值）
     drawUserInfo(username, items);
     // 绘制所有卡片
     items.forEach(drawCard);
@@ -250,15 +251,17 @@ function calculateAverageReality(results) {
     .slice(0, 26);
 
   let rank_m_weight_sum = 0;
+  let weight_sum = 0;
 
   for (let i = 0; i < sorted.length; i++) {
     const weight = 1 - 0.02 * i; // ω_i = 100% - 2%(i - 1)
     rank_m_weight_sum += sorted[i].singleNrkRaw * weight;
+    weight_sum += weight;
   }
 
   // 计算并返回最终的 Nrk，四舍五入到 4 位小数
-  const nrk = rank_m_weight_sum / 19.5;
-  return nrk.toFixed(4);
+  const nrk = rank_m_weight_sum / weight_sum;
+  return weight_sum > 0 ? nrk.toFixed(4) : '0.0000';
 }
 
 
