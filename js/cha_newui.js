@@ -99,7 +99,7 @@ const constants = {
   81: { constant: 10.5, category: "SY", name: "《Ж》" },
   82: { constant: 8.6, category: "TL", name: "《Ж》" },
   83: { constant: 8.7, category: "SY", name: "Random" },
-  84: { constant: 7.6, category: "SY", name: "Abatement" },
+  84: { constant: 8.5, category: "SY", name: "Abatement" },
   85: { constant: 3.5, category: "EZ", name: "Abatement" },
   86: { constant: 9.5, category: "SY", name: "self-dissociation" },
   87: { constant: 4.5, category: "EZ", name: "self-dissociation" },
@@ -247,28 +247,17 @@ function calculateAverageReality(results) {
   const sorted = results
     .filter(item => item.singleNrkRaw > 0)
     .sort((a, b) => b.singleNrkRaw - a.singleNrkRaw)
-    ;
+    .slice(0, 26);
 
-let nrk;
+  let rank_m_weight_sum = 0;
 
-// 检查 sorted 数组的长度
-if (sorted.length <= 26) {
-    // 计算前 26 项的 sum
-    let sum = 0;
-    for (let i = 0; i < sorted.length; i++) {
-        sum += sorted[i].singleNrkRaw;
-    }
-    nrk = sum / (sorted.length + 1);
-} else {
-    // 只处理前 26 项
-    let sum = 0;
-    for (let i = 0; i < 26; i++) {
-        sum += sorted[i].singleNrkRaw;
-    }
-    nrk = sum / 27; // 26 + 1
-}
+  for (let i = 0; i < sorted.length; i++) {
+    const weight = 1 - 0.02 * i; // ω_i = 100% - 2%(i - 1)
+    rank_m_weight_sum += sorted[i].singleNrkRaw * weight;
+  }
 
-
+  // 计算并返回最终的 Nrk，四舍五入到 4 位小数
+  const nrk = rank_m_weight_sum / 19.5;
   return nrk.toFixed(4);
 }
 
@@ -493,7 +482,7 @@ function downloadImage() {
     const imagePromises = [];
 
     for (let i = 0; i < actualCardCount; i++) {
-      const encodedName = encodeURIComponent(items[i].name);
+      const encodedName = encodeURIComponent(items[i].name).replace(/%22/g, '');
       const imgPath = `./jpgs/${encodedName}.jpg`;
       const rankImgPath = `./jpgs/${items[i].bestLevel}.png`;
       
