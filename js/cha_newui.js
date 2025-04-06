@@ -67,7 +67,7 @@ const constants = {
   49: { constant: 8.1, category: "TL", name: "恶修女——永火熔铸" },
   50: { constant: 5.1, category: "SY", name: "Feeling Lonely" },
   51: { constant: 2.0, category: "TL", name: "Feeling Lonely" },
-  52: { constant: 6.6, category: "SY", name: "Velocity" },
+  52: { constant: 6.3, category: "SY", name: "Velocity" },
   53: { constant: 2.0, category: "EZ", name: "Velocity" },
   54: { constant: 7.1, category: "SY", name: "What U Wanna Be (Radio Edit)" },
   55: { constant: 6.8, category: "SY", name: "Enough" },
