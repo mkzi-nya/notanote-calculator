@@ -106,7 +106,13 @@ const constants = {
   88: { constant: 8.3, category: "SY", name: "Nakunaru" },
   89: { constant: 8.9, category: "SY", name: "slic.hertz" },
   90: { constant: 2.0, category: "EZ", name: "弦色幻想诗" },
-  91: { constant: 7.5, category: "SY", name: "弦色幻想诗" }
+  91: { constant: 7.5, category: "SY", name: "弦色幻想诗" },
+  92: { constant: 7.4, category: "SY", name: "Flutter Echo" },
+  93: { constant: 8.4, category: "SY", name: "REVΘCATE" },
+  93: { constant: 2.0, category: "EZ", name: "REVΘCATE" },
+  94: { constant: 9.9, category: "SY", name: "Eschatology" },
+  95: { constant: 4.5, category: "EZ", name: "Eschatology" },
+  96: { constant: 6.9, category: "SY", name: "愛を探して" }
 };
 
 /* ========== 核心流程 ========== */
@@ -439,7 +445,7 @@ function downloadImage() {
   if (bgImageFile) {
     bgImagePromise = loadImage(URL.createObjectURL(bgImageFile));
   } else {
-    bgImagePromise = loadImage('./jpgs/查分图.jpg'); // 默认背景图
+    bgImagePromise = loadImage(`./jpgs/background/${Math.floor(Math.random() * 3)}.jpg`);
   }
 
   bgImagePromise
