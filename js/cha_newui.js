@@ -109,10 +109,12 @@ const constants = {
   91: { constant: 7.5, category: "SY", name: "弦色幻想诗" },
   92: { constant: 7.4, category: "SY", name: "Flutter Echo" },
   93: { constant: 8.4, category: "SY", name: "REVΘCATE" },
-  93: { constant: 2.0, category: "EZ", name: "REVΘCATE" },
-  94: { constant: 9.9, category: "SY", name: "Eschatology" },
-  95: { constant: 4.5, category: "EZ", name: "Eschatology" },
-  96: { constant: 6.9, category: "SY", name: "愛を探して" }
+  94: { constant: 2.0, category: "EZ", name: "REVΘCATE" },
+  95: { constant: 9.9, category: "SY", name: "Eschatology" },
+  96: { constant: 4.5, category: "EZ", name: "Eschatology" },
+  97: { constant: 6.9, category: "SY", name: "愛を探して" },
+  98: { constant: 6.9, category: "SY", name: "ENERGY SYNERGY MATRIX" },
+  99: { constant: 2.5, category: "EZ", name: "ENERGY SYNERGY MATRIX" }
 };
 
 /* ========== 核心流程 ========== */
