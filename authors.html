@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -13,16 +14,44 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
   <style>
     body {
-      margin: 0; padding: 20px; box-sizing: border-box; background: #0d1117;
-      display: flex; flex-direction: column; align-items: center; position: relative;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+      background: #0d1117;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
     }
-    .container { width: 100%; max-width: 900px; }
-    .markdown-body { width: 100%; overflow-wrap: break-word; }
-    .katex-display { display: block !important; text-align: center; margin: 10px 0; font-size: 1em; }
-    .toc { display: none; }
-    pre, code { user-select: text; }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .markdown-body {
+      width: 100%;
+      overflow-wrap: break-word;
+    }
+
+    .katex-display {
+      display: block !important;
+      text-align: center;
+      margin: 10px 0;
+      font-size: 1em;
+    }
+
+    .toc {
+      display: none;
+    }
+
+    pre,
+    code {
+      user-select: text;
+    }
   </style>
 </head>
+
 <body>
 
   <div class="container">
@@ -33,7 +62,7 @@
     marked.use(markedKatex());
     marked.setOptions({
       highlight: (code, lang) => {
-        if (lang && hljs.getLanguage(lang)) return hljs.highlight(code, {language: lang}).value;
+        if (lang && hljs.getLanguage(lang)) return hljs.highlight(code, { language: lang }).value;
         return hljs.highlightAuto(code).value;
       }
     });
@@ -59,7 +88,7 @@
       document.querySelectorAll('.katex-display').forEach(e => {
         e.style.fontSize = ''; // restore default size
         const actual = e.scrollWidth;
-        if(actual > w){
+        if (actual > w) {
           const fs = parseFloat(getComputedStyle(e).fontSize);
           e.style.fontSize = (fs * w / actual) + 'px';
         }
@@ -72,4 +101,5 @@
   </script>
 
 </body>
+
 </html>

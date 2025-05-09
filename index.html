@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" class="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,76 +10,107 @@
   <link rel="stylesheet" href="new_UI.css">
   <link href="./layui/css/layui.css" rel="stylesheet">
   <input type="file" id="fileupLoad" style="display:none;" />
-<style>
-    #languageMenu{position:absolute;right:0;top:40px;display:none;background-color:#333;color:#eee;border:1px solid #444;border-radius:4px;padding:5px;min-width:100px;z-index:9999}#languageMenu div{margin:5px;cursor:pointer;padding:3px 5px}#languageMenu div:hover{background-color:#444}
-    #settingsModal { 
-        display: none; 
-        position: fixed; 
-        top: 50%; 
-        left: 50%; 
-        transform: translate(-50%, -50%); 
-        background: #2a2a2a; 
-        color: #fff; 
-        padding: 30px; 
-        border-radius: 15px; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.7); 
-        z-index: 10000;
-        width: 300px;
+  <style>
+    #languageMenu {
+      position: absolute;
+      right: 0;
+      top: 40px;
+      display: none;
+      background-color: #333;
+      color: #eee;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 5px;
+      min-width: 100px;
+      z-index: 9999
     }
-    #settingsModal h3 { 
-        text-align: center;
-        font-size: 18px;
-        margin-bottom: 20px;
+
+    #languageMenu div {
+      margin: 5px;
+      cursor: pointer;
+      padding: 3px 5px
     }
-    #settingsModal input, 
-    #settingsModal button { 
-        margin-bottom: 15px;
-        padding: 8px;
-        width: 100%;
-        background-color: #444;
-        color: #fff;
-        border: 1px solid #555;
-        border-radius: 10px;
-        font-size: 16px;
+
+    #languageMenu div:hover {
+      background-color: #444
     }
-    #settingsModal input:focus, 
-    #settingsModal button:focus { 
-        outline: none; 
-        border-color: #888;
+
+    #settingsModal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #2a2a2a;
+      color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      width: 300px;
     }
+
+    #settingsModal h3 {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    #settingsModal input,
     #settingsModal button {
-        width: 48%;
-        display: inline-block;
-        cursor: pointer;
+      margin-bottom: 15px;
+      padding: 8px;
+      width: 100%;
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 10px;
+      font-size: 16px;
     }
+
+    #settingsModal input:focus,
+    #settingsModal button:focus {
+      outline: none;
+      border-color: #888;
+    }
+
+    #settingsModal button {
+      width: 48%;
+      display: inline-block;
+      cursor: pointer;
+    }
+
     #settingsModal .cancel-btn {
-        background-color: #777;
+      background-color: #777;
     }
+
     #settingsModal .apply-btn {
-        background-color: #5cb85c;
+      background-color: #5cb85c;
     }
-    #overlay { 
-        display: none; 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background-color: rgba(0,0,0,0.7); 
-        z-index: 9999; 
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 9999;
     }
-</style>
+  </style>
 
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-L5K3QVRHFZ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5K3QVRHFZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-L5K3QVRHFZ');
-</script>
+    gtag('config', 'G-L5K3QVRHFZ');
+  </script>
 </head>
+
 <body>
   <script src="./layui/layui.js"></script>
   <script src="./new_ui.js"></script>
@@ -97,30 +129,37 @@
   </div>
   <div class="layui-header header-opa">
     <div class="layui-logo header-opa-bg2" style="padding:16px;">
-      <h1 style="color:turquoise;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;">Notanote calc <span style="font-size:medium;color:gold;">Ultra</span></h1>
+      <h1 style="color:turquoise;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;">
+        Notanote calc <span style="font-size:medium;color:gold;">Ultra</span></h1>
     </div>
   </div>
   <div style="padding:30px;text-align:center;display:flex;">
     <div style="text-align:left;max-width:1200px;margin:auto;">
       <div class="layui-card rccc">
-        <div class="layui-card-header"><h2 data-i18n="welcome">Welcome</h2></div>
+        <div class="layui-card-header">
+          <h2 data-i18n="welcome">Welcome</h2>
+        </div>
         <div class="layui-card-body">
           <p data-i18n="greeting">你好，欢迎来到Nrk calc</p>
           <p data-i18n="description">这是一个用于计算Notanote Nrk分数的网站，你可以在这里导入存档并解析。</p>
           <hr>
-          <p><span data-i18n="qqGroup">QQ交流群：</span><a href="https://qm.qq.com/q/Utb6sNDvki" target="_blank"><span class="superlink" data-i18n="viewQQGroup">Milthm#√-1洨巟羣</span></a></p>
+          <p><span data-i18n="qqGroup">QQ交流群：</span><a href="https://qm.qq.com/q/Utb6sNDvki" target="_blank"><span
+                class="superlink" data-i18n="viewQQGroup">Milthm#√-1洨巟羣</span></a></p>
           <hr>
           <p>
-          <span data-i18n="tools">其他工具：</span><a href="https://mkzi-nya.github.io/milthm-calculator-web/" style="color:lightblue;text-decoration:underline;" data-i18n="milcalc">Milthm 查分器</a>
+            <span data-i18n="tools">其他工具：</span><a href="https://mkzi-nya.github.io/milthm-calculator-web/"
+              style="color:lightblue;text-decoration:underline;" data-i18n="milcalc">Milthm 查分器</a>
           </p>
           <hr>
-          <p><span data-i18n="link">友情链接：</span><a href="http://xuziyao.com/notanote/best/" target="_blank"><span class="superlink">Dason's Page</span></a></p>
+          <p><span data-i18n="link">友情链接：</span><a href="http://xuziyao.com/notanote/best/" target="_blank"><span
+                class="superlink">Dason's Page</span></a></p>
         </div>
       </div>
       <div class="layui-card rccc">
         <div class="layui-card-header" data-i18n="siteInfo">网站信息</div>
         <div class="layui-card-body">
-          <p><span data-i18n="siteAuthor">网站作者：</span><a href="javascript:void(0);" onclick="show_author_info();" style="color:lightblue;text-decoration:underline;" data-i18n="viewAuthor">查看</a></p>
+          <p><span data-i18n="siteAuthor">网站作者：</span><a href="javascript:void(0);" onclick="show_author_info();"
+              style="color:lightblue;text-decoration:underline;" data-i18n="viewAuthor">查看</a></p>
           <p data-i18n="lastUpdate">上次更新：3.14_11:03(UTC+8)</p>
           <p data-i18n="updateCombined" style="white-space:pre-line;"></p>
         </div>
@@ -229,13 +268,15 @@ ENERGY SYNERGY MATRIX,,,EZ,,,-,,,0
 愛を探して,,,SY,,,-,,,0
 
 </textarea>
-          <hr/>
+          <hr />
           <button class="layui-btn layui-btn-primary" onclick="javascript:processData();" data-i18n="parse">解析</button>
           <button class="layui-btn layui-btn-primary" onclick="javascript:upl();" data-i18n="uploadFile">上传文件</button>
-          <button class="layui-btn layui-btn-primary" onclick="javascript:downloadImage();" data-i18n="generateImage">生成图像</button>
+          <button class="layui-btn layui-btn-primary" onclick="javascript:downloadImage();"
+            data-i18n="generateImage">生成图像</button>
           <button class="layui-btn layui-btn-primary" onclick="showSettings();" data-i18n="settingsTitle">查分图设置</button>
           <div id="picgen" style="display:none;">
-            <span class="layui-badge layui-bg-black" data-i18n="generatingImage">正在生成图片，由于需要下载图片资源，可能需要一些时间。若一直没有反应，可以多次尝试。</span>
+            <span class="layui-badge layui-bg-black"
+              data-i18n="generatingImage">正在生成图片，由于需要下载图片资源，可能需要一些时间。若一直没有反应，可以多次尝试。</span>
           </div>
         </div>
       </div>
@@ -244,17 +285,19 @@ ENERGY SYNERGY MATRIX,,,EZ,,,-,,,0
         <div class="layui-card-body">
           <h3 data-i18n="userInfo">用户信息：</h3>
           <h4 id="userInfo"></h4>
-          <hr/>
+          <hr />
           <h3 data-i18n="charts">图表：</h3>
-          <button class="layui-btn layui-btn-primary layui-border-green" onclick="javascript:changeColumns(1);" data-i18n="increaseColumn">增加列</button>
-          <button class="layui-btn layui-btn-primary layui-border-green" onclick="javascript:changeColumns(-1);" data-i18n="decreaseColumn">减少列</button>
+          <button class="layui-btn layui-btn-primary layui-border-green" onclick="javascript:changeColumns(1);"
+            data-i18n="increaseColumn">增加列</button>
+          <button class="layui-btn layui-btn-primary layui-border-green" onclick="javascript:changeColumns(-1);"
+            data-i18n="decreaseColumn">减少列</button>
           <div class="container" id="output"></div>
         </div>
       </div>
     </div>
   </div>
   <div id="overlay" onclick="closeSettings()"></div>
-<div id="settingsModal">
+  <div id="settingsModal">
     <h3 data-i18n="settingsTitle">查分图设置</h3>
     <label for="cardCount" data-i18n="cardCountLabel">绘制卡片数量:</label>
     <input type="number" id="cardCount" value="30" min="1" data-i18n-placeholder="cardCountPlaceholder"><br>
@@ -262,54 +305,54 @@ ENERGY SYNERGY MATRIX,,,EZ,,,-,,,0
     <input type="file" id="bgImage" accept="image/*" data-i18n-placeholder="bgImagePlaceholder"><br>
     <button class="cancel-btn" onclick="closeSettings()" data-i18n="cancel">取消</button>
     <button class="apply-btn" onclick="applySettings()" data-i18n="apply">应用</button>
-</div>
+  </div>
   <script>
     function showSettings() {
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('settingsModal').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('settingsModal').style.display = 'block';
     }
 
     function closeSettings() {
-        document.getElementById('overlay').style.display = 'none';
-        document.getElementById('settingsModal').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('settingsModal').style.display = 'none';
     }
 
     function applySettings() {
-        var cardCount = document.getElementById('cardCount').value;
-        var bgImage = document.getElementById('bgImage').files[0];
-        if (bgImage) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                // Use the background image data URL (e.target.result)
-                console.log("背景图设置为: " + e.target.result);
-            };
-            reader.readAsDataURL(bgImage);
-        }
-        console.log("绘制卡片数量设置为: " + cardCount);
-        closeSettings();
+      var cardCount = document.getElementById('cardCount').value;
+      var bgImage = document.getElementById('bgImage').files[0];
+      if (bgImage) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          // Use the background image data URL (e.target.result)
+          console.log("背景图设置为: " + e.target.result);
+        };
+        reader.readAsDataURL(bgImage);
+      }
+      console.log("绘制卡片数量设置为: " + cardCount);
+      closeSettings();
     }
     let translations = {}, currentLang = 'zh', menuVisible = false;
     function loadTranslations() {
       fetch('lang.json').then(response => response.json()).then(data => {
         translations = data;
         let detected = (navigator.language || navigator.userLanguage).toLowerCase();
-        if (detected.startsWith('zh')) {detected = detected.includes('tw') || detected.includes('hk') || detected.includes('mo') ? 'zh-tw' : 'zh';}
+        if (detected.startsWith('zh')) { detected = detected.includes('tw') || detected.includes('hk') || detected.includes('mo') ? 'zh-tw' : 'zh'; }
         currentLang = translations[detected] ? detected : 'en'; setLanguage(currentLang);
-      }).catch(error => {console.error('加载翻译文件失败:', error); setLanguage('en');});
+      }).catch(error => { console.error('加载翻译文件失败:', error); setLanguage('en'); });
     }
     function setLanguage(lang) {
       currentLang = lang; document.documentElement.lang = lang;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {el.innerHTML = translations[lang][key];}
+        if (translations[lang] && translations[lang][key]) { el.innerHTML = translations[lang][key]; }
       });
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang] && translations[lang][key]) {el.placeholder = translations[lang][key];}
+        if (translations[lang] && translations[lang][key]) { el.placeholder = translations[lang][key]; }
       });
       menuVisible = false; document.getElementById('languageMenu').style.display = 'none';
     }
-    function toggleLangMenu() {menuVisible = !menuVisible; document.getElementById('languageMenu').style.display = menuVisible ? 'block' : 'none';}
+    function toggleLangMenu() { menuVisible = !menuVisible; document.getElementById('languageMenu').style.display = menuVisible ? 'block' : 'none'; }
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('languageButton').addEventListener('click', toggleLangMenu);
       document.getElementById('langZh').addEventListener('click', () => setLanguage('zh'));
@@ -322,7 +365,8 @@ ENERGY SYNERGY MATRIX,,,EZ,,,-,,,0
       document.getElementById('langVi').addEventListener('click', () => setLanguage('vi'));
       loadTranslations();
     });
-</script>
+  </script>
   <script src="./js/cha_newui.js"></script>
 </body>
+
 </html>
